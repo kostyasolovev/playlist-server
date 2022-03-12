@@ -10,23 +10,16 @@ type Playlist interface {
 
 // форма ответа от удаленного сервера.
 type Answer struct {
-	Err   error
+	Err   string
 	Items []string // например названия видео файлов
 }
 
 // реализация интерфейса Playlists.
-func (ans *Answer) Error() string { return ans.Err.Error() }
+func (ans *Answer) Error() string { return ans.Err }
 
-func (ans *Answer) Print() []string {
-	buf := make([]string, 0, len(ans.Items))
-	for _, v := range ans.Items {
-		buf = append(buf, v)
-	}
+func (ans *Answer) Print() []string { return ans.Items }
 
-	return buf
-}
-
-func MockRPC(id string) Playlist {
+func MockRPC(id string) *Answer {
 	ans := &Answer{
 		Items: make([]string, 10),
 	}
