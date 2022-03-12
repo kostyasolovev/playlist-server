@@ -15,7 +15,7 @@ import (
 type Server struct {
 	port    string
 	tmpls   map[string]*template.Template
-	rpcFunc func() models.Playlist
+	rpcFunc func(id string) models.Playlist
 }
 
 // creates a new instance of server.

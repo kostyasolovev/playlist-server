@@ -26,7 +26,7 @@ func (ans *Answer) Print() []string {
 	return buf
 }
 
-func MockRPC() Playlist {
+func MockRPC(id string) Playlist {
 	ans := &Answer{
 		Items: make([]string, 10),
 	}
