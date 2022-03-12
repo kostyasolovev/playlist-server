@@ -19,7 +19,7 @@ func (ans *Answer) Error() string { return ans.Err }
 
 func (ans *Answer) Print() []string { return ans.Items }
 
-func MockRPC(id string) *Answer {
+func MockRPC(id string) Playlist {
 	ans := &Answer{
 		Items: make([]string, 10),
 	}
