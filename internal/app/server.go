@@ -33,7 +33,6 @@ func (server *Server) Start(ctx context.Context) error {
 	}
 	// shutdown on call
 	go func() {
-		<-ctx.Done()
 		log.Println(srv.Shutdown(ctx))
 	}()
 
