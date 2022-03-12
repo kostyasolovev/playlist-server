@@ -1,0 +1,8 @@
+{{define "items"}}
+{{ if .Error}}
+    <div>{{.Error}}</div>
+{{else}}
+    {{range .Items}}
+    <div>{{.}}</div>
+    {{end}}
+{{end}}
