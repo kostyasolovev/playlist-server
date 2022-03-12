@@ -26,3 +26,7 @@ func (server *Server) playlist(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 }
+
+func mainRoute(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./../front/index.html")
+}

@@ -39,8 +39,10 @@ func New(port string) (*Server, error) {
 func (server *Server) Start(ctx context.Context) error {
 	router := mux.NewRouter()
 	router.Use(panicMiddleware)
-	router.HandleFunc("/", debugRoute).Methods("GET")
+	router.HandleFunc("/debug", debugRoute).Methods("GET")
 	router.HandleFunc("/panic", debugPanic)
+	router.HandleFunc("/", mainRoute)
+	router.HandleFunc("/{playlistId}/list", server.playlist)
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", server.port),
@@ -48,6 +50,7 @@ func (server *Server) Start(ctx context.Context) error {
 	}
 	// shutdown on call
 	go func() {
+		<-ctx.Done()
 		log.Println(srv.Shutdown(ctx))
 	}()
 

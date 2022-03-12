@@ -1,16 +1,19 @@
-<head>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
-    <script>
-    $(document).ready(function(){
-        $(dform.playlist_id).keyup(function(){
-            $(dform).get(0).setAttribute('action', '/account/'+$(dform.playlist_id).val());
+<html>
+    <head>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+        <script>
+        $(document).ready(function(){
+            $(dform.playlist_id).keyup(function(){
+                $(dform).get(0).setAttribute('action', $(dform.playlist_id).val()+'/list');
+            });
         });
-    });
-    </script>
-</head>
-<body>
-    <div><h1>YOUTUBE PLAYLISTS</h1></div>
-    <form id="dform" action="foo" method="post">
-        <input type="text" id="playlist_id" />
-        <input type="submit" id="sub" value="show" />
-    </form>
+        </script>
+    </head>
+    <body>
+        <div><h1>YOUTUBE PLAYLISTS</h1></div>
+        <form id="dform" action="foo" method="post">
+            <input type="text" id="playlist_id" />
+            <input type="submit" id="sub" value="show" />
+        </form>
+    </body>
+</html>
