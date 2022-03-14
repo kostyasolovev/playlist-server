@@ -1,9 +1,9 @@
 
 {{define "items"}}
-    {{if .Error}}
-        <div>{{.Error}}</div>
+    {{if .GetErr}}
+        <div>{{.GetErr}}</div>
     {{else}}
-        {{range .Print}}
+        {{range .GetItem}}
             <div>{{.}}</div>
         {{end}}
     {{end}}

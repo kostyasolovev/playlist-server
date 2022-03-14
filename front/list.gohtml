@@ -1,10 +1,10 @@
 <html>
-    <head>
+     <head>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
         <script>
         $(document).ready(function(){
             $(dform.playlist_id).keyup(function(){
-                $(dform).get(0).setAttribute('action', '/account/'+$(dform.playlist_id).val());
+                $(dform).get(0).setAttribute('action', $(dform.playlist_id).val()+'/list');
             });
         });
         </script>
