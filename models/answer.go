@@ -4,23 +4,23 @@ import "fmt"
 
 // методы, которые обязательно должны быть у ответа.
 type Playlist interface {
-	Error() string
-	Print() []string
+	GetErr() string
+	GetItem() []string
 }
 
 // форма ответа от удаленного сервера.
-type Answer struct {
+type AnswerMock struct {
 	Err   string
 	Items []string // например названия видео файлов
 }
 
 // реализация интерфейса Playlists.
-func (ans *Answer) Error() string { return ans.Err }
+func (ans *AnswerMock) GetErr() string { return ans.Err }
 
-func (ans *Answer) Print() []string { return ans.Items }
+func (ans *AnswerMock) GetItem() []string { return ans.Items }
 
 func MockRPC(id string) Playlist {
-	ans := &Answer{
+	ans := &AnswerMock{
 		Items: make([]string, 10),
 	}
 

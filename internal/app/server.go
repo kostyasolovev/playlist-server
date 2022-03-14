@@ -9,13 +9,18 @@ import (
 	"playlist-server/models"
 
 	"github.com/gorilla/mux"
+	"google.golang.org/grpc"
+
+	api "github.com/kostyasolovev/youtube_pb_api"
 )
 
 //
 type Server struct {
-	port    string
-	tmpls   map[string]*template.Template
-	rpcFunc func(id string) models.Playlist
+	port     string
+	tmpls    map[string]*template.Template
+	rpcFunc  func(context.Context, string) (models.Playlist, error)
+	grpcConn *grpc.ClientConn
+	grpcCli  api.YoutubePlaylistClient
 }
 
 // creates a new instance of server.
@@ -30,7 +35,7 @@ func New(port string) (*Server, error) {
 	}
 
 	server.tmpls["list"] = listTmpl
-	server.rpcFunc = models.MockRPC
+	server.rpcFunc = server.registerDefaultListGRPCFunc()
 
 	return server, nil
 }
@@ -42,7 +47,7 @@ func (server *Server) Start(ctx context.Context) error {
 	router.HandleFunc("/debug", debugRoute).Methods("GET")
 	router.HandleFunc("/panic", debugPanic)
 	router.HandleFunc("/", mainRoute)
-	router.HandleFunc("/{playlistId}/list", server.playlist)
+	router.HandleFunc("/{playlistId}/list", server.playlist(ctx))
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", server.port),

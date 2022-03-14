@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -19,18 +20,22 @@ func debugPanic(w http.ResponseWriter, r *http.Request) {
 	panic("panic route")
 }
 
-func (server *Server) playlist(w http.ResponseWriter, r *http.Request) {
+func (server *Server) playlist(ctx context.Context) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		listTpl := server.tmpls["list"]
 
-	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
-	listTpl := server.tmpls["list"]
+		ans, err := server.rpcFunc(ctx, vars["playlistId"])
+		if err != nil {
+			http.Error(w, "internal server error", http.StatusInternalServerError)
+			log.Println(err)
+		}
 
-	ans := server.rpcFunc(vars["playlistId"])
-	if err := listTpl.Execute(w, ans); err != nil {
-		http.Error(w, "internal server error", http.StatusInternalServerError)
-		log.Println(err)
+		if err := listTpl.Execute(w, ans); err != nil {
+			http.Error(w, "internal server error", http.StatusInternalServerError)
+			log.Println(err)
+		}
 	}
-	// fmt.Fprintf(w, "Category: %v\n")
 }
 
 func mainRoute(w http.ResponseWriter, r *http.Request) {
