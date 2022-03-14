@@ -35,6 +35,7 @@ func New(port string) (*Server, error) {
 	}
 
 	server.tmpls["list"] = listTmpl
+
 	server.rpcFunc = server.registerDefaultListGRPCFunc()
 
 	return server, nil
@@ -42,6 +43,14 @@ func New(port string) (*Server, error) {
 
 // starts the web server.
 func (server *Server) Start(ctx context.Context) error {
+	if err := server.dialGRPC(ctx, "8082"); err != nil {
+		return err
+	}
+
+	if err := server.registerGRPCClient(ctx); err != nil {
+		return err
+	}
+
 	router := mux.NewRouter()
 	router.Use(panicMiddleware)
 	router.HandleFunc("/debug", debugRoute).Methods("GET")
