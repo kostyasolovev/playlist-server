@@ -21,7 +21,7 @@ func (ans *AnswerMock) GetItem() []string { return ans.Items }
 
 func MockRPC(id string) Playlist {
 	ans := &AnswerMock{
-		Items: make([]string, 10),
+		Items: make([]string, 10), // nolint: gomnd
 	}
 
 	for i := 0; i < 10; i++ {

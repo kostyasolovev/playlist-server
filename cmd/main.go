@@ -20,6 +20,7 @@ func main() {
 	// graceful shutdown
 	exitChan := make(chan os.Signal, 1)
 	signal.Notify(exitChan, syscall.SIGTERM, syscall.SIGINT)
+
 	go func() {
 		<-exitChan
 		finish()

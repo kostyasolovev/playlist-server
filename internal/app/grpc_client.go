@@ -6,16 +6,18 @@ import (
 	"playlist-server/models"
 
 	api "github.com/kostyasolovev/youtube_pb_api"
+	"github.com/pkg/errors"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func (server *Server) dialGRPC(ctx context.Context, port string) (err error) {
-	server.grpcConn, err = grpc.DialContext(ctx, fmt.Sprintf(":%s", port), grpc.WithInsecure())
-	return err
+	server.grpcConn, err = grpc.DialContext(ctx, fmt.Sprintf(":%s", port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	return errors.Wrap(err, "dialing grpc error")
 }
 
-func (server *Server) registerGRPCClient(ctx context.Context) (err error) {
+func (server *Server) registerGRPCClient(context.Context) (err error) {
 	server.grpcCli = api.NewYoutubePlaylistClient(server.grpcConn)
 
 	return err
@@ -29,7 +31,7 @@ func (server *Server) registerDefaultListGRPCFunc() func(context.Context, string
 			},
 		)
 		if err != nil {
-			return nil, err
+			return nil, errors.Wrap(err, "youtubeService response error")
 		}
 
 		return resp, nil

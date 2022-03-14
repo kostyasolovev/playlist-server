@@ -9,6 +9,7 @@ import (
 	"playlist-server/models"
 
 	"github.com/gorilla/mux"
+	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 
 	api "github.com/kostyasolovev/youtube_pb_api"
@@ -31,7 +32,7 @@ func New(port string) (*Server, error) {
 
 	listTmpl, err := template.ParseFiles("./../front/list.gohtml", "./../front/items.gohtml")
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse templates %s", err)
+		return nil, fmt.Errorf("failed to parse templates %w", err)
 	}
 
 	server.tmpls["list"] = listTmpl
@@ -68,5 +69,5 @@ func (server *Server) Start(ctx context.Context) error {
 		log.Println(srv.Shutdown(ctx))
 	}()
 
-	return srv.ListenAndServe()
+	return errors.Wrap(srv.ListenAndServe(), "server failed")
 }
