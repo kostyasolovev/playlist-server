@@ -3,13 +3,13 @@ package app
 import (
 	"context"
 	"fmt"
-	"playlist-server/models"
 
 	api "github.com/kostyasolovev/youtube_pb_api"
 	"github.com/pkg/errors"
-
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+
+	"playlist-server/models"
 )
 
 func (server *Server) dialGRPC(ctx context.Context, port string) (err error) {
