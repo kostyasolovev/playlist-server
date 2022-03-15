@@ -6,13 +6,13 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"playlist-server/models"
 
 	"github.com/gorilla/mux"
+	api "github.com/kostyasolovev/youtube_pb_api"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 
-	api "github.com/kostyasolovev/youtube_pb_api"
+	"playlist-server/models"
 )
 
 //
@@ -44,7 +44,7 @@ func New(port string) (*Server, error) {
 
 // starts the web server.
 func (server *Server) Start(ctx context.Context) error {
-	if err := server.dialGRPC(ctx, "8082"); err != nil {
+	if err := server.dialGRPC(ctx, "8081"); err != nil {
 		return err
 	}
 

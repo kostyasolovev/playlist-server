@@ -29,6 +29,7 @@ func (server *Server) playlist(ctx context.Context) func(http.ResponseWriter, *h
 		if err != nil {
 			http.Error(w, "internal server error", http.StatusInternalServerError)
 			log.Println(err)
+			return
 		}
 
 		if err := listTpl.Execute(w, ans); err != nil {
