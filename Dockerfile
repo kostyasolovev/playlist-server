@@ -1,11 +1,11 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.17-alpine
+FROM golang:onbuild
 WORKDIR /playlist-server
-COPY ./ /playlist-server
+COPY . .
 RUN go mod download
 RUN go build -o ./playlist-server cmd/main.go
 EXPOSE 8083
 EXPOSE 8081
-CMD ./playlist-server -p 8083
+CMD ./playlist-server
 
