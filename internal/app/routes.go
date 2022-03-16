@@ -40,5 +40,5 @@ func (server *Server) playlist(ctx context.Context) func(http.ResponseWriter, *h
 }
 
 func mainRoute(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./../front/index.html")
+	http.ServeFile(w, r, "./front/index.html")
 }

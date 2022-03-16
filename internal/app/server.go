@@ -30,7 +30,7 @@ func New(port string) (*Server, error) {
 	server.port = port
 	server.tmpls = make(map[string]*template.Template, 1)
 
-	listTmpl, err := template.ParseFiles("./../front/list.gohtml", "./../front/items.gohtml")
+	listTmpl, err := template.ParseFiles("./front/list.gohtml", "./front/items.gohtml")
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse templates %w", err)
 	}
