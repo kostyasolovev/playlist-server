@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	defaultPort := "8080"
+	defaultPort := "8081"
 	newPort := flag.String("p", defaultPort, "port to listen")
 	flag.Parse()
 
